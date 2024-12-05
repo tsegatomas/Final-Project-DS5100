@@ -1,121 +1,125 @@
 # Monte Carlo Simulator
 
 ## Metadata
-
-- **Project Name**: Monte Carlo Simulator
-- **Author**: Tomas Tsega
+**Project Name**: Monte Carlo Simulator
+**Author**: Tomas Tsega
 
 ## Synopsis
-
-Monte Carlo Simulator that simulates rolling dice, playing games with those dice, and analyzing the results using statistical methods. Below is an example of how to install, import, and use the module to create a die, play a game, and analyze the outcomes.
+The Monte Carlo Simulator allows users to simulate games involving dice and analyze the results. The main classes are `Die`, `Game`, and `Analyzer`. 
 
 ### Installation
-
-To install the Monte Carlo Simulator module, use pip:
-
+To install the Monte Carlo Simulator use the following command:
 ```sh
-pip install montecarlo
+pip install .
 ```
 
 ### Usage
 
-1. **Create Dice**
+#### Importing the Package
+```python
+from montecarlo_simulator import Die, Game, Analyzer
+```
 
-   ```python
-   import numpy as np
-   from montecarlo import Die
+#### Creating Dice
+```python
+import numpy as np
 
-   faces = np.array([1, 2, 3, 4, 5, 6])
-   die = Die(faces)
-   die.change_weight(6, 5.0)  
-   ```
+faces = np.array([1, 2, 3, 4, 5, 6])
+die = Die(faces)
+```
 
-2. **Play a Game**
+#### Changing Weights of a Die
+```python
+die.change_weight(6, 5.0)  # Changing the weight of face '6' to 5.0
+```
 
-   ```python
-   from montecarlo import Game
+#### Playing a Game
+```python
+game = Game([die])
+game.play(rolls=1000)  # Rolling the die 1000 times
+```
 
-   die1 = Die(faces)
-   die2 = Die(faces)
-   game = Game([die1, die2])
-   game.play(1000) 
-   results = game.show()
-   print(results)
-   ```
-
-3. **Analyze a Game**
-
-   ```python
-   from montecarlo import Analyzer
-
-   analyzer = Analyzer(game)
-   jackpots = analyzer.jackpot()  
-   print(f"Number of jackpots: {jackpots}")
-   face_counts = analyzer.face_counts_per_roll()
-   print(face_counts)
-   ```
+#### Analyzing the Game
+```python
+analyzer = Analyzer(game)
+print(analyzer.jackpot())  # Count the number of jackpots
+print(analyzer.face_counts_per_roll())  # Count of each face per roll
+```
 
 ## API Description
 
 ### Die Class
-
-- **`__init__(faces)`**: Initializes the die with faces.
-
-  - **Parameters**: `faces` (np.array) - A NumPy array of unique faces.
-  - **Raises**: `TypeError` if not a NumPy array, `ValueError` if faces are not unique.
-
-- **`change_weight(face, new_weight)`**: Changes the weight of a specific face.
-
+- **`Die(faces: np.ndarray)`**
+  - **Description**: Initializes a die with given faces.
   - **Parameters**:
-    - `face` - The face value to change.
-    - `new_weight` (float) - The new weight for that face.
-  - **Raises**: `IndexError` if face is invalid, `TypeError` if weight is not numeric.
+    - `faces` (np.ndarray): An array of distinct values representing the die faces.
+  - **Raises**: `TypeError` if the input is not a NumPy array, `ValueError` if the values are not distinct.
+  - **Attributes**: Initializes a private DataFrame storing faces and weights.
 
-- **`roll(num_rolls=1)`**: Rolls the die a specified number of times.
+- **`change_weight(face, new_weight)`**
+  - **Description**: Changes the weight of a given face.
+  - **Parameters**:
+    - `face`: The face whose weight needs to be changed.
+    - `new_weight` (float): The new weight for the face.
+  - **Raises**: `IndexError` if the face does not exist, `TypeError` if the weight is not numeric.
 
-  - **Parameters**: `num_rolls` (int) - Number of times to roll the die.
+- **`roll(rolls=1)`**
+  - **Description**: Rolls the die a given number of times.
+  - **Parameters**: `rolls` (int): The number of times to roll the die.
   - **Returns**: A list of outcomes.
 
-- **`show()`**: Shows the current state of the die.
-
-  - **Returns**: A DataFrame with faces and their weights.
+- **`show()`**
+  - **Description**: Returns the current state of the die.
+  - **Returns**: A DataFrame containing faces and their corresponding weights.
 
 ### Game Class
+- **`Game(dice: list)`**
+  - **Description**: Initializes the game with a list of dice.
+  - **Parameters**:
+    - `dice` (list): List of `Die` objects.
+  - **Raises**: `TypeError` if the list does not contain valid `Die` objects.
 
-- **`__init__(dice)`**: Initializes the game with a list of similar dice.
+- **`play(rolls=1)`**
+  - **Description**: Rolls all dice a given number of times.
+  - **Parameters**: `rolls` (int): The number of times to roll the dice.
+  - **Stores**: The results of the rolls in a private DataFrame.
 
-  - **Parameters**: `dice` (list) - A list of Die objects.
-
-- **`play(num_rolls)`**: Plays the game by rolling all dice a specified number of times.
-
-  - **Parameters**: `num_rolls` (int) - Number of times to roll the dice.
-
-- **`show(form='wide')`**: Shows the results of the game.
-
-  - **Parameters**: `form` (str) - Format of the results, either 'wide' or 'narrow'.
-  - **Returns**: A DataFrame of the results.
-  - **Raises**: `ValueError` if form is invalid.
+- **`show(form='wide')`**
+  - **Description**: Shows the results of the most recent play.
+  - **Parameters**: `form` (str): `'wide'` or `'narrow'`. Defaults to `'wide'`.
+  - **Returns**: A DataFrame in the specified format.
+  - **Raises**: `ValueError` if an invalid form is provided.
 
 ### Analyzer Class
+- **`Analyzer(game: Game)`**
+  - **Description**: Initializes the analyzer with a game object.
+  - **Parameters**: `game` (Game): A `Game` object to be analyzed.
+  - **Raises**: `TypeError` if the input is not a `Game` object.
 
-- **`__init__(game)`**: Initializes the analyzer with a game object.
-
-  - **Parameters**: `game` (Game) - The game to analyze.
-  - **Raises**: `ValueError` if not a Game object.
-
-- **`jackpot()`**: Computes the number of jackpots (all faces the same).
-
+- **`jackpot()`**
+  - **Description**: Computes the number of times all dice rolled the same face.
   - **Returns**: An integer representing the number of jackpots.
 
-- **`face_counts_per_roll()`**: Computes the count of each face per roll.
+- **`face_counts_per_roll()`**
+  - **Description**: Computes the counts of each face per roll.
+  - **Returns**: A DataFrame with face counts per roll.
 
-  - **Returns**: A DataFrame of face counts.
-
-- **`combo_count()`**: Computes the distinct combinations of faces rolled.
-
+- **`combo_count()`**
+  - **Description**: Computes distinct combinations of faces rolled.
   - **Returns**: A DataFrame with combinations and their counts.
 
-- **`permutation_count()`**: Computes distinct permutations of faces rolled.
-
+- **`permutation_count()`**
+  - **Description**: Computes distinct permutations of faces rolled.
   - **Returns**: A DataFrame with permutations and their counts.
+
+- **`scrabble_word_analysis(word_list)`**
+  - **Description**: Checks if rolls form valid Scrabble words.
+  - **Parameters**: `word_list` (list): A list of valid Scrabble words.
+  - **Returns**: A DataFrame indicating which rolls form valid words.
+
+- **`letter_frequency_analysis(letter_frequencies)`**
+  - **Description**: Computes the frequency of each letter rolled compared to expected frequencies.
+  - **Parameters**: `letter_frequencies` (dict): Expected frequencies of letters.
+  - **Returns**: A DataFrame comparing rolled counts to expected frequencies.
+
 
