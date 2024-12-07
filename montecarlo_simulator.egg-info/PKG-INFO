@@ -1,0 +1,19 @@
+Metadata-Version: 2.1
+Name: montecarlo_simulator
+Version: 1.0.0
+Summary: A Monte Carlo simulator using Die, Game, and Analyzer classes
+Home-page: https://github.com/yourusername/montecarlo_simulator
+Author: Your Name
+Author-email: your.email@example.com
+Classifier: Programming Language :: Python :: 3
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Requires-Python: >=3.6
+Description-Content-Type: text/markdown
+Requires-Dist: numpy
+Requires-Dist: pandas
+
+# Monte Carlo Simulator
+
+This is a Monte Carlo Simulator written in Python that allows for rolling dice, playing games, and analyzing results. It consists of three classes: Die, Game, and Analyzer.
+
