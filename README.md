@@ -3,8 +3,6 @@
 ## Metadata
 - **Author:** Tomas
 - **Repository URL:** [https://github.com/tsegatomas/Final-Project-DS5100.git](https://github.com/tsegatomas/Final-Project-DS5100.git)
-- **Version:** 1.0.0
-- **License:** MIT License
 
 ## Synopsis
 This project implements a Monte Carlo simulation framework for working with dice, games, and analyzing their outcomes. It includes three main classes:
