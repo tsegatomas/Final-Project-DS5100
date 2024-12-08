@@ -1,6 +1,7 @@
 README.md
 setup.py
 montecarlo_simulator/__init__.py
+montecarlo_simulator/help_docs_test.py
 montecarlo_simulator/montecarlo.py
 montecarlo_simulator.egg-info/PKG-INFO
 montecarlo_simulator.egg-info/SOURCES.txt
